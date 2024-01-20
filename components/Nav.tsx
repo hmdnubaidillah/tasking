@@ -13,7 +13,7 @@ export default function Nav() {
   }
 
   return (
-    <nav className="fixed top-0 left-0 w-full bg-white shadow-[0px_1px_14px_rgba(0,0,0,0.15)]">
+    <nav className="fixed top-0 left-0 w-full bg-white shadow-[0px_1px_14px_rgba(0,0,0,0.15)] z-50">
       <div className="sm:w-[80%] w-[90%] m-auto flex justify-between items-center sm:py-5 py-3 text-textPrimary transition-all">
         <div className="flex items-center gap-5">
           <h1 className="font-medium sm:text-2xl">Tasking</h1>
