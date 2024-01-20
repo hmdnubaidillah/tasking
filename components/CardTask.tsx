@@ -19,7 +19,7 @@ export default function CardTask() {
           key={i}
           className={`${
             isTaskDone ? "opacity-50" : "opacity-100"
-          } rounded-sm md:w-[70%] w-full bg-white h-fit border-[1.5px] border-gray-300 cursor-default transition-all`}
+          } rounded-sm bg-white h-fit border-[1.5px] border-gray-300 cursor-default transition-all`}
         >
           <div>
             <div className="border-b border-gray-300 p-4 flex items-center justify-between">
