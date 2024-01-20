@@ -1,24 +1,16 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import NewTaskModal from "@/components/modals/NewTaskModal";
 
 export default function Nav() {
   const [taskDialog, setTaskDialog] = useState(false);
-  const [width, setWidth] = useState(window.innerWidth);
 
-  useEffect(() => {
-    function handleResize() {
-      setWidth(window.innerWidth);
-    }
-
-    window.onresize = handleResize;
-
-    return () => {
-      window.onresize = handleResize;
-    };
-  }, []);
+  function handleOpenModal() {
+    setTaskDialog((prev) => !prev);
+    document.querySelector("body")?.classList.add("overflow-hidden");
+  }
 
   return (
     <nav className="fixed top-0 left-0 w-full bg-white shadow-[0px_1px_14px_rgba(0,0,0,0.15)]">
@@ -43,11 +35,11 @@ export default function Nav() {
 
           <Button
             size={"default"}
-            onClick={() => setTaskDialog((prev) => !prev)}
+            onClick={handleOpenModal}
             className="font-medium bg-primaryBlue hover:bg-primaryHoverBlue transition-all text-white sm:text-base text-sm"
             type="button"
           >
-            <i className="uil uil-plus sm:mr-1 mr-0" /> {width < 640 ? null : "Create Task"}
+            <i className="uil uil-plus sm:mr-1 mr-0" /> <span className="max-sm:hidden">Create Task</span>
           </Button>
         </div>
       </div>

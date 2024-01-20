@@ -1,18 +1,19 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Textarea } from "../ui/textarea";
 import { buttonsImportance, buttonsCategory } from "@/constant";
+import moment from "moment";
 
 export default function NewTaskModal({
   setTaskDialog,
 }: {
   setTaskDialog: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
-  const modalContainer = useRef(null);
   const [btnImporatance, setBtnImporatance] = useState("");
   const [btnCategory, setBtnCategory] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
     taskName: "",
@@ -25,29 +26,32 @@ export default function NewTaskModal({
 
   function handleCreateNewTask(e: React.FormEvent) {
     e.preventDefault();
+    formData.date = moment(formData.date).format("DD-MMM-YYYY");
+
+    setLoading(true);
+
+    setTimeout(() => {
+      setLoading(false);
+      setTaskDialog(false);
+      document.querySelector("body")?.classList.remove("overflow-hidden");
+    }, 1000);
   }
 
-  useEffect(() => {
-    const body = document.querySelector("body");
+  function handleCloseModal(e: React.MouseEvent) {
+    const target = (e.target as HTMLElement).id;
 
-    window.onclick = (event) => {
-      const target = event.target as HTMLElement;
-
-      if (target.matches("#modal-container") || target.matches("#btn-modal-close")) {
-        setTaskDialog(false);
-        body?.classList.remove("overflow-hidden");
-        return;
-      }
-
+    if (target === "modal-container" || target === "btn-modal-close") {
+      setTaskDialog(false);
+      document.querySelector("body")?.classList.remove("overflow-hidden");
+    } else {
       setTaskDialog(true);
-      body?.classList.add("overflow-hidden");
-    };
-  }, [setTaskDialog]);
+    }
+  }
 
   return (
     <div
       id="modal-container"
-      ref={modalContainer}
+      onClick={handleCloseModal}
       className="fixed top-0 left-0 z-20 grid place-content-center w-full h-screen bg-[rgba(0,0,0,.5)] transition-all"
     >
       <div className="bg-white rounded-md text-textPrimary w-fit">
@@ -69,16 +73,26 @@ export default function NewTaskModal({
             <Textarea
               placeholder="Description..."
               className="resize-none"
-              onChange={(e) => setFormData({ ...formData, taskName: e.target.value })}
-              value={formData.taskName}
+              onChange={(e) => setFormData({ ...formData, desc: e.target.value })}
+              value={formData.desc}
             />
           </div>
 
           <div>
             <h1 className="font-medium">Deadline</h1>
             <div className="mt-3">
-              <input type="date" className="mr-5" />
-              <input type="time" />
+              <input
+                type="date"
+                placeholder="dd-mm-yyyy"
+                onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+                value={formData.date}
+                className="mr-5"
+              />
+              <input
+                type="time"
+                onChange={(e) => setFormData({ ...formData, time: e.target.value })}
+                value={formData.time}
+              />
             </div>
           </div>
 
@@ -128,7 +142,8 @@ export default function NewTaskModal({
           </div>
 
           <div className="flex gap-5 justify-end">
-            <Button className="bg-primaryBlue hover:bg-primaryHoverBlue" type="submit">
+            <Button className="bg-primaryBlue hover:bg-primaryHoverBlue flex gap-2" type="submit">
+              {loading && <i className="uil uil-spinner-alt text-2xl animate-spin"></i>}
               Create
             </Button>
             <Button type="button" id="btn-modal-close" className="hover:bg-slate-200 bg-white border text-textPrimary">
