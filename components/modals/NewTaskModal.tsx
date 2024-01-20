@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Textarea } from "../ui/textarea";
@@ -11,7 +11,6 @@ export default function NewTaskModal({
 }: {
   setTaskDialog: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
-  const modalContainer = useRef(null);
   const [btnImporatance, setBtnImporatance] = useState("");
   const [btnCategory, setBtnCategory] = useState("");
   const [loading, setLoading] = useState(false);
@@ -34,30 +33,25 @@ export default function NewTaskModal({
     setTimeout(() => {
       setLoading(false);
       setTaskDialog(false);
+      document.querySelector("body")?.classList.remove("overflow-hidden");
     }, 1000);
   }
 
-  useEffect(() => {
-    const body = document.querySelector("body");
+  function handleCloseModal(e: React.MouseEvent) {
+    const target = (e.target as HTMLElement).id;
 
-    window.onclick = (event) => {
-      const target = event.target as HTMLElement;
-
-      if (target.matches("#modal-container") || target.matches("#btn-modal-close")) {
-        setTaskDialog(false);
-        body?.classList.remove("overflow-hidden");
-        return;
-      }
-
+    if (target === "modal-container" || target === "btn-modal-close") {
+      setTaskDialog(false);
+      document.querySelector("body")?.classList.remove("overflow-hidden");
+    } else {
       setTaskDialog(true);
-      body?.classList.add("overflow-hidden");
-    };
-  }, [setTaskDialog]);
+    }
+  }
 
   return (
     <div
       id="modal-container"
-      // ref={modalContainer}
+      onClick={handleCloseModal}
       className="fixed top-0 left-0 z-20 grid place-content-center w-full h-screen bg-[rgba(0,0,0,.5)] transition-all"
     >
       <div className="bg-white rounded-md text-textPrimary w-fit">

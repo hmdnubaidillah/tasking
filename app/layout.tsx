@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Rubik } from "next/font/google";
 import "./globals.css";
 import Nav from "@/components/Nav";
-import TaskDialogProvider from "@/context/TaskDialogContext";
 
 const rubik = Rubik({
   subsets: ["latin"],
@@ -26,10 +25,8 @@ export default function RootLayout({
         <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css" />
       </head>
       <body className={rubik.className}>
-        <TaskDialogProvider>
-          <Nav />
-          {children}
-        </TaskDialogProvider>
+        <Nav />
+        {children}
       </body>
     </html>
   );

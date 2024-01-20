@@ -7,6 +7,11 @@ import NewTaskModal from "@/components/modals/NewTaskModal";
 export default function Nav() {
   const [taskDialog, setTaskDialog] = useState(false);
 
+  function handleOpenModal() {
+    setTaskDialog((prev) => !prev);
+    document.querySelector("body")?.classList.add("overflow-hidden");
+  }
+
   return (
     <nav className="fixed top-0 left-0 w-full bg-white shadow-[0px_1px_14px_rgba(0,0,0,0.15)]">
       <div className="sm:w-[80%] w-[90%] m-auto flex justify-between items-center sm:py-5 py-3 text-textPrimary transition-all">
@@ -30,7 +35,7 @@ export default function Nav() {
 
           <Button
             size={"default"}
-            onClick={() => setTaskDialog((prev) => !prev)}
+            onClick={handleOpenModal}
             className="font-medium bg-primaryBlue hover:bg-primaryHoverBlue transition-all text-white sm:text-base text-sm"
             type="button"
           >
