@@ -4,9 +4,6 @@ import { Button } from "./ui/button";
 export default function CalendarComp() {
   return (
     <div className="mt-3 bg-white p-4 border border-gray-300 rounded-sm flex items-center justify-between">
-      {/* <Calendar mode="single" selected={date} onSelect={setDate} className="bg-white rounded-md border shadow" /> */}
-
-      {/* <input type="date" className="" /> */}
       <DatePicker />
       <div className="flex gap-2 ml-2">
         <Button className="bg-zinc-500 hover:bg-zinc-400 text-sm">Find</Button>
