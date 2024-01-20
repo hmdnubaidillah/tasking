@@ -1,5 +1,6 @@
 import CardTask from "@/components/CardTask";
 import ProfileBar from "@/components/ProfileBar";
+import CalendarComp from "@/components/Calendar";
 
 export default function Home() {
   return (
@@ -10,6 +11,7 @@ export default function Home() {
         </section>
         <section className="sm:w-[31%]">
           <ProfileBar />
+          <CalendarComp />
         </section>
       </div>
     </main>
