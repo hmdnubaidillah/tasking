@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
+
 import NewTaskModal from "@/components/modals/NewTaskModal";
 
 export default function Nav() {
