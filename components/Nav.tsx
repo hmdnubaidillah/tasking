@@ -9,6 +9,7 @@ export default function Nav() {
 
   function handleOpenModal() {
     setTaskDialog((prev) => !prev);
+    // setTaskDialog(true);
     document.querySelector("body")?.classList.add("overflow-hidden");
   }
 
