@@ -26,7 +26,7 @@ export default function ProfileBar() {
       <div className="p-4">
         {isLogout ? (
           <Button
-            onClick={() => route.push("/register")}
+            onClick={() => route.push("/login")}
             className="sm:text-lg text-base w-full bg-green-500 hover:bg-green-400"
             type="button"
           >
