@@ -4,7 +4,6 @@ import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 import { Tasks } from "@/constant";
 import { buttonsImportance } from "@/constant";
-import { ScrollArea } from "./ui/scroll-area";
 
 export default function CardTask() {
   const [isTaskDone, setIsTaskDone] = useState(false);
@@ -14,7 +13,7 @@ export default function CardTask() {
   }
 
   return (
-    <ScrollArea className="sm:h-screen">
+    <>
       {Tasks.map((task, i) => (
         <div
           key={task.id}
@@ -73,6 +72,6 @@ export default function CardTask() {
           </>
         </div>
       ))}
-    </ScrollArea>
+    </>
   );
 }

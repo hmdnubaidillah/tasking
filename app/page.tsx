@@ -3,7 +3,7 @@ import CardTask from "@/components/CardTask";
 import ProfileBar from "@/components/ProfileBar";
 import CalendarComp from "@/components/Calendar";
 import DateBadge from "@/components/DateBadge";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import ScrollToTop from "@/components/ScrollToTop";
 
 export default function Home() {
   return (
@@ -23,6 +23,7 @@ export default function Home() {
             </aside>
           </section>
         </div>
+        <ScrollToTop />
       </main>
     </>
   );
