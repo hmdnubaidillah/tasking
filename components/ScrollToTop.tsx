@@ -31,8 +31,8 @@ export default function ScrollToTop() {
       <div
         onClick={handleToTop}
         className={`w-[50px] h-[50px] bg-secondaryBlue rounded-full grid place-content-center fixed ${
-          isArrowVisible ? "bottom-10" : "-bottom-[200px]"
-        }  right-10 shadow-md transition-all cursor-pointer hover:bg-slate-500`}
+          isArrowVisible ? "sm:bottom-10 bottom-5" : "-bottom-[200px]"
+        }  sm:right-10 right-3 shadow-md transition-all cursor-pointer hover:bg-slate-500`}
       >
         <i className="uil uil-arrow-up text-4xl text-white"></i>
       </div>
