@@ -4,6 +4,7 @@ import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 import { Tasks } from "@/constant";
 import { buttonsImportance } from "@/constant";
+import { ScrollArea } from "./ui/scroll-area";
 
 export default function CardTask() {
   const [isTaskDone, setIsTaskDone] = useState(false);
@@ -13,15 +14,15 @@ export default function CardTask() {
   }
 
   return (
-    <>
+    <ScrollArea className="sm:h-screen">
       {Tasks.map((task, i) => (
         <div
-          key={i}
+          key={task.id}
           className={`${
             isTaskDone ? "opacity-50" : "opacity-100"
-          } rounded-sm bg-white h-fit border-[1.5px] border-gray-300 cursor-default transition-all`}
+          } rounded-sm bg-white h-fit border-[1.5px] border-gray-300 cursor-default transition-all mb-3`}
         >
-          <div>
+          <>
             <div className="border-b border-gray-300 p-4 flex items-center justify-between">
               <h1 className="sm:text-2xl text-xl font-semibold ">{task.category}</h1>
               <div className="sm:text-sm text-xs">
@@ -69,9 +70,9 @@ export default function CardTask() {
                 </Button>
               </div>
             </div>
-          </div>
+          </>
         </div>
       ))}
-    </>
+    </ScrollArea>
   );
 }
