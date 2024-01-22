@@ -59,4 +59,13 @@ export const Tasks = [
     time: "",
     importance: "Less Important",
   },
+  {
+    id: 4,
+    name: "Web Project",
+    desc: "This is the task description nothing to cares about, this all just about the description",
+    category: "Coding",
+    date: "",
+    time: "",
+    importance: "Less Important",
+  },
 ];
