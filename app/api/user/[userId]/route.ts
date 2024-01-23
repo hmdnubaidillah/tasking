@@ -1,7 +1,7 @@
 import { prisma } from "@/lib/lib.db";
 import http from "http-status-codes";
 
-export async function GET({ params }: { params: { userId: string } }) {
+export async function GET(req: Request, { params }: { params: { userId: string } }) {
   try {
     const user = await prisma.user.findUnique({
       where: {
