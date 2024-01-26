@@ -12,6 +12,7 @@ export async function GET() {
 
     return Response.json({ tasks }, { status: http.OK });
   } catch (error) {
+    console.log(error);
     if (error instanceof Error) {
       return Response.json({ error: error.message || "INTERNAL SERVER ERROR" }, { status: http.INTERNAL_SERVER_ERROR });
     }

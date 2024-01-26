@@ -5,20 +5,20 @@ import { UserType } from "@/types";
 import http from "http-status-codes";
 
 export async function POST(req: Request) {
-  const { username, password }: UserType = await req.json();
+  const { email, password }: UserType = await req.json();
 
   try {
     const user = await prisma.user.findUnique({
       where: {
-        username,
+        email,
       },
     });
 
     if (!user) {
-      return Response.json({ message: "username not found" }, { status: http.NOT_FOUND });
+      return Response.json({ message: "email not found" }, { status: http.NOT_FOUND });
     }
 
-    const auth = await decrypt(password, user.password);
+    const auth = await decrypt(password, user.password!);
 
     if (!auth) {
       return Response.json({ message: "password incorrect" }, { status: http.UNAUTHORIZED });

@@ -23,6 +23,8 @@ export async function POST(req: Request) {
     return Response.json({ task: newTask }, { status: http.CREATED });
   } catch (error) {
     console.log(error);
-    return Response.json({ error }, { status: http.INTERNAL_SERVER_ERROR });
+    if (error instanceof Error) {
+      return Response.json({ error }, { status: http.INTERNAL_SERVER_ERROR });
+    }
   }
 }
