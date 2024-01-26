@@ -7,6 +7,7 @@ export async function GET(req: Request, { params }: { params: { userId: string }
       where: {
         id: params.userId,
       },
+      include: { tasks: true },
     });
 
     if (!user) {
