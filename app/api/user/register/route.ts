@@ -5,15 +5,16 @@ import { userSchema } from "@/helpers/helper.validation";
 import { UserType } from "@/types";
 
 export async function POST(req: Request) {
-  const { username, password }: UserType = await req.json();
+  const { email, username, password }: UserType = await req.json();
 
   try {
-    const userValidated = await userSchema.validate({ username, password });
+    const userValidated = await userSchema.validate({ email, username, password });
     const hashedPassword = await encrypt(userValidated.password);
 
     const newUser = await prisma.user.create({
       data: {
-        username,
+        email: userValidated.email,
+        username: userValidated.username,
         password: hashedPassword,
       },
     });
