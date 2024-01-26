@@ -24,8 +24,8 @@ export const registerSchema = object({
   password: string()
     .required("password is required")
     .min(8, "minimum password length is 8")
-    .matches(/[a-z]/, "password must be atleast have 1 lowercase char")
-    .matches(/[A-Z]/, "password must be atleast have 1 uppercase char"),
+    .matches(/[a-z]/, "password must have 1 lowercase char")
+    .matches(/[A-Z]/, "password must have 1 uppercase char"),
   passwordRepeat: string()
     .required("please repeat password")
     .oneOf([ref("password")], "password dont match"),

@@ -16,6 +16,12 @@ export default function RegisterForm() {
   } = useForm<RegisterFormType>({
     criteriaMode: "all",
     resolver: yupResolver(registerSchema),
+    defaultValues: {
+      email: "",
+      username: "",
+      password: "",
+      passwordRepeat: "",
+    },
   });
 
   const onSubmit: SubmitHandler<RegisterFormType> = (data) => {
@@ -41,13 +47,6 @@ export default function RegisterForm() {
 
         {/* handling errors username */}
         {errors && <p className="text-red-600 text-base">{errors.username?.message}</p>}
-        {/* {errors && (
-          <ul className="text-sm list-disc px-4">
-            <li className={`${errors.username?.message !== "minimum length 4" ? "text-red-600" : "text-textPrimary"} `}>
-              Minimum username length is 4
-            </li>
-          </ul>
-        )} */}
 
         <Controller
           name="password"
@@ -56,26 +55,14 @@ export default function RegisterForm() {
         />
 
         {/* handling errors password */}
-
         {errors && <p className="text-red-600 text-base">{errors.password?.message}</p>}
-        {/* {errors && (
-          <ul className="text-sm list-disc px-4">
-            <li className={`${errors.password?.message !== "minimum 8 chars" ? "text-red-600" : "text-textPrimary"}`}>
-              Minimum password length is 8 characters
-            </li>
-            <li className={`${errors.password?.message !== "1 lowercase char" ? "text-red-600" : "text-textPrimary"}`}>
-              Password must have 1 lowercase character
-            </li>
-            <li className={`${errors.password?.message !== "1 uppercase char" ? "text-red-600" : "text-textPrimary"}`}>
-              Password must have 1 uppercase character
-            </li>
-          </ul>
-        )} */}
 
         <Controller
           name="passwordRepeat"
           control={control}
-          render={({ field }) => <Input placeholder="repeat password" type="text" className="text-base" {...field} />}
+          render={({ field }) => (
+            <Input placeholder="repeat password" type="password" className="text-base" {...field} />
+          )}
         />
 
         {errors && <p className="text-red-600 text-base">{errors.passwordRepeat?.message}</p>}
