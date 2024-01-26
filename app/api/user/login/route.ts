@@ -18,7 +18,7 @@ export async function POST(req: Request) {
       return Response.json({ message: "username not found" }, { status: http.NOT_FOUND });
     }
 
-    const auth = await decrypt(password, user.password);
+    const auth = await decrypt(password, user.password!);
 
     if (!auth) {
       return Response.json({ message: "password incorrect" }, { status: http.UNAUTHORIZED });
