@@ -1,14 +1,28 @@
+import { Prisma } from "@prisma/client";
+
 export interface UserType {
+  email: string;
   username: string;
   password: string;
 }
 
-export interface TaskType {
-  name: string;
-  desc: string;
+export type TaskType = {
+  creator: string;
+  desc?: string;
   dateDl: Date;
   category: string;
   importance: string;
-  isDone: boolean;
-  isOngoing: boolean;
+};
+
+export interface TaskIdType {
+  params: {
+    taskId: string;
+  };
+}
+
+export interface RegisterFormType {
+  email: string;
+  username: string;
+  password: string;
+  passwordRepeat: string;
 }
