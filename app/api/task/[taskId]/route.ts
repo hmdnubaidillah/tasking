@@ -51,7 +51,7 @@ export async function PATCH(req: Request, { params }: TaskIdType) {
   }
 }
 
-export async function DELETE(req: Response, { params }: TaskIdType) {
+export async function DELETE(req: Request, { params }: TaskIdType) {
   try {
     const task = await prisma.task.delete({
       where: {
