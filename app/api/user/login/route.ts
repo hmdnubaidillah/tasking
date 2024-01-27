@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/lib.db";
-import { decrypt } from "@/helpers/helper.bcrypt";
-import { createToken } from "@/helpers/helper.jwt";
+import { decrypt } from "@/lib/lib.bcrypt";
+import { createToken } from "@/lib/lib.jwt";
 import { UserType } from "@/types";
 import http from "http-status-codes";
 

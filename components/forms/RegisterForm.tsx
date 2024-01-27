@@ -4,24 +4,19 @@ import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
-import { registerSchema } from "@/helpers/helper.validation";
+import { registerSchema } from "@/lib/lib.validation";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { ErrorMessage } from "@hookform/error-message";
 import { RegisterFormType } from "@/types";
 
 export default function RegisterForm() {
   const {
     handleSubmit,
-    control,
+    register,
     formState: { errors },
   } = useForm<RegisterFormType>({
     criteriaMode: "all",
     resolver: yupResolver(registerSchema),
-    defaultValues: {
-      email: "",
-      username: "",
-      password: "",
-      passwordRepeat: "",
-    },
   });
 
   const onSubmit: SubmitHandler<RegisterFormType> = (data) => {
@@ -31,40 +26,33 @@ export default function RegisterForm() {
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-3">
-        <Controller
-          name="email"
-          control={control}
-          render={({ field }) => <Input placeholder="email" type="email" className="text-base" {...field} />}
-        />
+        <Input placeholder="email" type="email" className="text-base" {...register("email")} />
+
         {/* handling errors email */}
         {errors && <p className="text-red-600 text-base">{errors.email?.message}</p>}
 
-        <Controller
-          name="username"
-          control={control}
-          render={({ field }) => <Input placeholder="username" type="text" className="text-base" {...field} />}
-        />
+        <Input placeholder="username" type="text" className="text-base" {...register("username")} />
 
         {/* handling errors username */}
         {errors && <p className="text-red-600 text-base">{errors.username?.message}</p>}
 
-        <Controller
-          name="password"
-          control={control}
-          render={({ field }) => <Input placeholder="password" type="password" className="text-base" {...field} />}
-        />
+        <Input placeholder="password" type="password" className="text-base" {...register("password")} />
 
         {/* handling errors password */}
-        {errors && <p className="text-red-600 text-base">{errors.password?.message}</p>}
+        <ul className="list-disc px-4 text-sm text-red-600">
+          <ErrorMessage
+            name="password"
+            errors={errors}
+            render={(error) =>
+              error.messages
+                ? error.messages &&
+                  Object.entries(error.messages).map(([type, message]) => <li key={type}>{message}</li>)
+                : null
+            }
+          />
+        </ul>
 
-        <Controller
-          name="passwordRepeat"
-          control={control}
-          render={({ field }) => (
-            <Input placeholder="repeat password" type="password" className="text-base" {...field} />
-          )}
-        />
-
+        <Input placeholder="repeat password" type="password" className="text-base" {...register("passwordRepeat")} />
         {errors && <p className="text-red-600 text-base">{errors.passwordRepeat?.message}</p>}
 
         <Button type="submit" className="text-lg">

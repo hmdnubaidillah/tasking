@@ -1,7 +1,7 @@
 import { prisma } from "@/lib/lib.db";
-import { encrypt } from "@/helpers/helper.bcrypt";
+import { encrypt } from "@/lib/lib.bcrypt";
 import http from "http-status-codes";
-import { userSchema } from "@/helpers/helper.validation";
+import { userSchema } from "@/lib/lib.validation";
 import { UserType } from "@/types";
 
 export async function POST(req: Request) {

@@ -1,7 +1,7 @@
 import http from "http-status-codes";
 import { TaskType } from "@/types";
 import { prisma } from "@/lib/lib.db";
-import { taskSchema } from "@/helpers/helper.validation";
+import { taskSchema } from "@/lib/lib.validation";
 import { Prisma } from "@prisma/client";
 
 export async function POST(req: Request) {
