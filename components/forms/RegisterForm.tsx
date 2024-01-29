@@ -1,5 +1,4 @@
 "use client";
-
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -8,8 +7,14 @@ import { registerSchema } from "@/lib/lib.validation";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { ErrorMessage } from "@hookform/error-message";
 import { RegisterFormType } from "@/types";
+import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
 
 export default function RegisterForm() {
+  const { data, mutate, error, isPending, isError, isSuccess } = useMutation({
+    mutationFn: (formData: RegisterFormType) => axios.post("/api/user/register", formData),
+  });
+
   const {
     handleSubmit,
     register,
@@ -19,9 +24,17 @@ export default function RegisterForm() {
     resolver: yupResolver(registerSchema),
   });
 
-  const onSubmit: SubmitHandler<RegisterFormType> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<RegisterFormType> = async (formInput) => {
+    mutate(formInput);
   };
+
+  if (isSuccess) {
+    console.log(data);
+  }
+
+  if (isError) {
+    console.log(error.message);
+  }
 
   return (
     <div>
@@ -56,7 +69,7 @@ export default function RegisterForm() {
         {errors && <p className="text-red-600 text-base">{errors.passwordRepeat?.message}</p>}
 
         <Button type="submit" className="text-lg">
-          Submit
+          {isPending ? "Loading" : "Register"}
         </Button>
       </form>
       <div className="mt-3 text-center">

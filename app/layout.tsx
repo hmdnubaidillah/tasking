@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Rubik } from "next/font/google";
 import "./globals.css";
-
+import QueryProvider from "@/components/QueryProvider";
 const rubik = Rubik({
   subsets: ["latin"],
   display: "auto",
@@ -23,7 +23,9 @@ export default function RootLayout({
       <head>
         <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css" />
       </head>
-      <body className={`${rubik.className}`}>{children}</body>
+      <body className={`${rubik.className}`}>
+        <QueryProvider>{children}</QueryProvider>
+      </body>
     </html>
   );
 }

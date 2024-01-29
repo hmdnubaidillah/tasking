@@ -3,33 +3,35 @@ import { decrypt } from "@/lib/lib.bcrypt";
 import { createToken } from "@/lib/lib.jwt";
 import { UserType } from "@/types";
 import http from "http-status-codes";
+import HttpExcepction from "@/helpers/http-excepction";
 
 export async function POST(req: Request) {
-  const { email, password }: UserType = await req.json();
+  const { usernameOrEmail, password }: UserType = await req.json();
 
   try {
-    const user = await prisma.user.findUnique({
+    const user = await prisma.user.findFirst({
       where: {
-        email,
+        OR: [{ email: usernameOrEmail }, { username: usernameOrEmail }],
       },
     });
 
     if (!user) {
-      return Response.json({ message: "email not found" }, { status: http.NOT_FOUND });
+      throw new HttpExcepction(http.NOT_FOUND, "username or email not found");
     }
 
-    const auth = await decrypt(password, user.password!);
+    const auth = await decrypt(password, user.password);
 
     if (!auth) {
-      return Response.json({ message: "password incorrect" }, { status: http.UNAUTHORIZED });
+      throw new HttpExcepction(http.UNAUTHORIZED, "Password incorrect");
     }
 
     const token = await createToken(user.id);
-
-    return Response.json({ user, headers: { authorization: `token=${token}` } }, { status: http.OK });
+    return Response.json({ user: user, headers: { authorization: `token=${token}` } }, { status: http.OK });
   } catch (error) {
-    if (error instanceof Error) {
-      return Response.json({ message: error.message }, { status: http.INTERNAL_SERVER_ERROR });
+    console.log(error);
+
+    if (error instanceof HttpExcepction) {
+      return Response.json({ error: error.message }, { status: error.errorCode });
     }
   }
 }

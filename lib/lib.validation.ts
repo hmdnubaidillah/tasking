@@ -6,7 +6,7 @@ export const userSchema = object({
   password: string()
     .required("password is required")
     .min(8, "minimum password length is 8")
-    .matches(/[a-z]/, "password must be atleast have 1 lowercase char"),
+    .matches(/[A-Z]/, "password need 1 uppercase char"),
 });
 
 export const taskSchema = object({

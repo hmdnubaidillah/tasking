@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/lib.db";
 import http from "http-status-codes";
+import HttpExcepction from "@/helpers/http-excepction";
 
 export async function GET(req: Request, { params }: { params: { userId: string } }) {
   try {
@@ -11,16 +12,13 @@ export async function GET(req: Request, { params }: { params: { userId: string }
     });
 
     if (!user) {
-      return Response.json({ message: "user not found" }, { status: http.NOT_FOUND });
+      throw new HttpExcepction(http.NOT_FOUND, "User not found");
     }
 
     return Response.json({ user }, { status: http.OK });
   } catch (error) {
-    if (error instanceof Error) {
-      return Response.json(
-        { error: error.message || http.INTERNAL_SERVER_ERROR },
-        { status: http.INTERNAL_SERVER_ERROR }
-      );
+    if (error instanceof HttpExcepction) {
+      return Response.json({ error: error.message }, { status: error.errorCode });
     }
   }
 }

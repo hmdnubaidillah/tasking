@@ -4,6 +4,7 @@ export interface UserType {
   email: string;
   username: string;
   password: string;
+  usernameOrEmail: string;
 }
 
 export type TaskType = {
