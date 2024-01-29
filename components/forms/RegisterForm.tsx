@@ -3,7 +3,7 @@ import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
-import { registerSchema } from "@/lib/lib.validation";
+import { registerSchema } from "@/libs/lib.validation";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { ErrorMessage } from "@hookform/error-message";
 import { RegisterFormType } from "@/types";

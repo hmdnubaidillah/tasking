@@ -1,6 +1,6 @@
-import { prisma } from "@/lib/lib.db";
-import { decrypt } from "@/lib/lib.bcrypt";
-import { createToken } from "@/lib/lib.jwt";
+import { prisma } from "@/libs/lib.db";
+import { decrypt } from "@/libs/lib.bcrypt";
+import { createToken } from "@/libs/lib.jwt";
 import { UserType } from "@/types";
 import http from "http-status-codes";
 import HttpExcepction from "@/helpers/http-excepction";
@@ -33,5 +33,7 @@ export async function POST(req: Request) {
     if (error instanceof HttpExcepction) {
       return Response.json({ error: error.message }, { status: error.errorCode });
     }
+
+    return Response.json({ error: "INTERNAL SERVER ERROR" }, { status: http.INTERNAL_SERVER_ERROR });
   }
 }
