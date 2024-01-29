@@ -19,11 +19,9 @@ async function checkUserExist(email: string, username: string) {
   });
 
   if (existingUserEmail || existingUsername) {
-    throw new HttpExcepction(http.UNPROCESSABLE_ENTITY, {
-      errors: {
-        ...(existingUserEmail ? { email: "email already taken" } : {}),
-        ...(existingUsername ? { username: "username already taken" } : {}),
-      },
+    throw new HttpExcepction(http.NOT_FOUND, {
+      ...(existingUserEmail ? { message: "Email already taken" } : {}),
+      ...(existingUsername ? { message: "Username already taken" } : {}),
     });
   }
 }
