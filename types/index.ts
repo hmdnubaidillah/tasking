@@ -7,14 +7,6 @@ export interface UserType {
   usernameOrEmail: string;
 }
 
-export type TaskType = {
-  creator: string;
-  desc?: string;
-  dateDl: Date;
-  category: string;
-  importance: string;
-};
-
 export interface TaskIdType {
   params: {
     taskId: string;

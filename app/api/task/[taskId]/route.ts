@@ -1,5 +1,5 @@
 import http from "http-status-codes";
-import { prisma } from "@/lib/lib.db";
+import { prisma } from "@/libs/lib.db";
 import { TaskIdType } from "@/types";
 
 export async function GET(req: Request, { params }: TaskIdType) {

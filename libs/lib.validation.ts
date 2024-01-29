@@ -1,4 +1,4 @@
-import { date, object, string, ref } from "yup";
+import { date, object, string, ref, boolean } from "yup";
 
 export const userSchema = object({
   email: string().email("not a proper email").required("email is required"),
@@ -27,4 +27,14 @@ export const registerSchema = object({
   passwordRepeat: string()
     .required("please repeat password")
     .oneOf([ref("password")], "password dont match"),
+});
+
+export const updateTaskSchema = object({
+  name: string().required(),
+  importance: string().required(),
+  category: string().required(),
+  desc: string(),
+  isOngoing: boolean(),
+  dateDl: date(),
+  isDone: boolean(),
 });
