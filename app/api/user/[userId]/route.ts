@@ -1,6 +1,6 @@
 import { prisma } from "@/libs/lib.db";
 import http from "http-status-codes";
-import HttpExcepction from "@/helpers/http-excepction";
+import HttpExcepction from "@/helpers/helper.httpException";
 
 export async function GET(req: Request, { params }: { params: { userId: string } }) {
   try {

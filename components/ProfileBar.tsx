@@ -1,15 +1,14 @@
 "use client";
-import { useState } from "react";
 import { Button } from "./ui/button";
 import { useRouter } from "next/navigation";
+import { logout } from "@/app/action";
 
-export default function ProfileBar() {
-  const [isLogout, setIsLogout] = useState(true);
+export default function ProfileBar({ token }: { token: boolean | undefined }) {
   const route = useRouter();
 
   return (
     <div className="bg-white h-fit border border-gray-300 rounded-sm cursor-default">
-      {isLogout ? null : (
+      {!token ? null : (
         //  user profile
         <div className="flex items-center gap-2 p-4 border-b border-gray-300">
           <div className="w-[50px] h-[50px] bg-purple-500 rounded-full grid place-content-center text-xl font-semibold text-white">
@@ -24,7 +23,7 @@ export default function ProfileBar() {
 
       {/* button */}
       <div className="p-4">
-        {isLogout ? (
+        {!token ? (
           <Button
             onClick={() => route.push("/login")}
             className="sm:text-lg text-base w-full bg-green-500 hover:bg-green-400"
@@ -34,7 +33,16 @@ export default function ProfileBar() {
           </Button>
         ) : (
           <Button
-            onClick={() => setIsLogout((prev) => !prev)}
+            onClick={() => {
+              const isConfirm = confirm("sure wanna logout?");
+
+              if (!isConfirm) {
+                return;
+              }
+
+              logout();
+              route.push("/login");
+            }}
             className="sm:text-lg text-base w-full bg-red-500 hover:bg-red-400"
             type="button"
           >

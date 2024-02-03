@@ -1,7 +1,7 @@
 import { TaskIdType } from "@/types";
 import { prisma } from "@/libs/lib.db";
 import http from "http-status-codes";
-import HttpExcepction from "@/helpers/http-excepction";
+import HttpExcepction from "@/helpers/helper.httpException";
 import { updateTaskSchema } from "@/libs/lib.validation";
 
 export async function PATCH(req: Request, { params }: TaskIdType) {
@@ -24,6 +24,10 @@ export async function PATCH(req: Request, { params }: TaskIdType) {
         desc: validatedTask.desc,
       },
     });
+
+    if (!task) {
+      throw new HttpExcepction(http.NOT_FOUND, "Task not found");
+    }
 
     return Response.json({ updatedTask: task }, { status: http.OK });
   } catch (error) {

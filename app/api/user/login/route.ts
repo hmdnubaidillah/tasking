@@ -3,7 +3,8 @@ import { decrypt } from "@/libs/lib.bcrypt";
 import { createToken } from "@/libs/lib.jwt";
 import { UserType } from "@/types";
 import http from "http-status-codes";
-import HttpExcepction from "@/helpers/http-excepction";
+import HttpExcepction from "@/helpers/helper.httpException";
+import { cookies } from "next/headers";
 
 export async function POST(req: Request) {
   const { usernameOrEmail, password }: UserType = await req.json();
@@ -22,11 +23,19 @@ export async function POST(req: Request) {
     const auth = await decrypt(password, user.password);
 
     if (!auth) {
-      throw new HttpExcepction(http.UNAUTHORIZED, "Password incorrect");
+      throw new HttpExcepction(http.UNAUTHORIZED, "password incorrect");
     }
 
     const token = await createToken(user.id);
-    return Response.json({ user: user, headers: { authorization: `token=${token}` } }, { status: http.OK });
+
+    cookies().set("token", token, {
+      httpOnly: true,
+      maxAge: 10 * 365 * 24 * 60 * 60,
+      path: "/",
+      sameSite: "lax",
+    });
+
+    return Response.json({ user: user }, { status: http.OK });
   } catch (error) {
     console.log(error);
 

@@ -29,6 +29,11 @@ export const registerSchema = object({
     .oneOf([ref("password")], "password dont match"),
 });
 
+export const loginSchema = object({
+  usernameOrEmail: string().required("email or username required"),
+  password: string().required("password required"),
+});
+
 export const updateTaskSchema = object({
   name: string().required(),
   importance: string().required(),

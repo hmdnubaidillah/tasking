@@ -5,7 +5,7 @@ export const metadata = {
   title: "Tasking | Login",
 };
 
-export default function page() {
+export default function Login() {
   return (
     <FormContainer title="Login">
       <LoginForm />
