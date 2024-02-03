@@ -1,16 +1,27 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 import { Tasks } from "@/constant";
 import { buttonsImportance } from "@/constant";
+import { TaskType } from "@/types";
+import { useGetTasks } from "@/hooks/hook.task";
 
 export default function CardTask() {
   const [isTaskDone, setIsTaskDone] = useState(false);
+  const { data, isPending, isSuccess } = useGetTasks();
 
   function handleTaskIsDone(id: number) {
     setIsTaskDone(true);
   }
+
+  // if (isPending) {
+  //   console.log("Loading");
+  // }
+
+  // if (isSuccess) {
+  //   console.log(data?.data.tasks.map((e: any) => e));
+  // }
 
   return (
     <>

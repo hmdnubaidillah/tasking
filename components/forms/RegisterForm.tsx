@@ -9,6 +9,7 @@ import { ErrorMessage } from "@hookform/error-message";
 import { RegisterFormType } from "@/types";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
+import { useEffect } from "react";
 
 export default function RegisterForm() {
   const { data, mutate, error, isPending, isError, isSuccess } = useMutation({
@@ -18,6 +19,8 @@ export default function RegisterForm() {
   const {
     handleSubmit,
     register,
+    trigger,
+    control,
     formState: { errors },
   } = useForm<RegisterFormType>({
     criteriaMode: "all",
@@ -28,28 +31,77 @@ export default function RegisterForm() {
     mutate(formInput);
   };
 
-  if (isSuccess) {
-    console.log(data);
-  }
+  // if (isSuccess) {
+  //   console.log(data);
+  // }
 
-  if (isError) {
-    console.log(error.message);
-  }
+  // if (isError) {
+  //   console.log(error.message);
+  // }
+
+  useEffect(() => {
+    trigger();
+  }, [trigger]);
 
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-3">
-        <Input placeholder="email" type="email" className="text-base" {...register("email")} />
+        <Controller
+          name="email"
+          control={control}
+          render={({ field: { value, onChange, ...field } }) => (
+            <Input
+              placeholder="email"
+              type="email"
+              className="text-base"
+              {...register("email")}
+              onChange={(e) => {
+                onChange(e);
+                trigger("email");
+              }}
+            />
+          )}
+        />
 
         {/* handling errors email */}
         {errors && <p className="text-red-600 text-base">{errors.email?.message}</p>}
 
-        <Input placeholder="username" type="text" className="text-base" {...register("username")} />
+        <Controller
+          name="username"
+          control={control}
+          render={({ field: { value, onChange, ...field } }) => (
+            <Input
+              placeholder="username"
+              type="text"
+              className="text-base"
+              {...register("username")}
+              onChange={(e) => {
+                onChange(e);
+                trigger("username");
+              }}
+            />
+          )}
+        />
 
         {/* handling errors username */}
         {errors && <p className="text-red-600 text-base">{errors.username?.message}</p>}
 
-        <Input placeholder="password" type="password" className="text-base" {...register("password")} />
+        <Controller
+          name="password"
+          control={control}
+          render={({ field: { value, onChange, ...field } }) => (
+            <Input
+              placeholder="password"
+              type="password"
+              className="text-base"
+              {...register("password")}
+              onChange={(e) => {
+                onChange(e);
+                trigger("password");
+              }}
+            />
+          )}
+        />
 
         {/* handling errors password */}
         <ul className="list-disc px-4 text-sm text-red-600">
@@ -65,7 +117,22 @@ export default function RegisterForm() {
           />
         </ul>
 
-        <Input placeholder="repeat password" type="password" className="text-base" {...register("passwordRepeat")} />
+        <Controller
+          name="passwordRepeat"
+          control={control}
+          render={({ field: { value, onChange, ...field } }) => (
+            <Input
+              placeholder="passwordRepeat"
+              type="password"
+              className="text-base"
+              {...register("passwordRepeat")}
+              onChange={(e) => {
+                onChange(e);
+                trigger("passwordRepeat");
+              }}
+            />
+          )}
+        />
         {errors && <p className="text-red-600 text-base">{errors.passwordRepeat?.message}</p>}
 
         <Button type="submit" className="text-lg">

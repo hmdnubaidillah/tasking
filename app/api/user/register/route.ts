@@ -3,7 +3,7 @@ import { encrypt } from "@/libs/lib.bcrypt";
 import http from "http-status-codes";
 import { userSchema } from "@/libs/lib.validation";
 import { UserType } from "@/types";
-import HttpExcepction from "@/helpers/http-excepction";
+import HttpExcepction from "@/helpers/helper.httpException";
 
 async function checkUserExist(email: string, username: string) {
   const existingUserEmail = await prisma.user.findUnique({

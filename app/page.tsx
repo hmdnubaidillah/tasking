@@ -1,11 +1,13 @@
 import Nav from "@/components/Nav";
 import CardTask from "@/components/CardTask";
 import ProfileBar from "@/components/ProfileBar";
-import CalendarComp from "@/components/Calendar";
 import DateBadge from "@/components/DateBadge";
 import ScrollToTop from "@/components/ScrollToTop";
+import { cookies } from "next/headers";
 
 export default function Home() {
+  const token = cookies().has("token");
+
   return (
     <>
       <Nav />
@@ -16,10 +18,8 @@ export default function Home() {
               <DateBadge />
               <CardTask />
             </div>
-
             <aside className="sm:w-[31%]">
-              <ProfileBar />
-              <CalendarComp />
+              <ProfileBar token={token} />
             </aside>
           </section>
         </div>

@@ -1,7 +1,7 @@
 import http from "http-status-codes";
 import { prisma } from "@/libs/lib.db";
 import { taskSchema } from "@/libs/lib.validation";
-import HttpExcepction from "@/helpers/http-excepction";
+import HttpExcepction from "@/helpers/helper.httpException";
 import { error } from "console";
 
 export async function POST(req: Request) {
