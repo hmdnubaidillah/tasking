@@ -42,6 +42,6 @@ export const updateTaskSchema = object({
   category: string().required(),
   desc: string(),
   isOngoing: boolean(),
-  dateDl: date(),
+  dateDl: string(),
   isDone: boolean(),
 });
