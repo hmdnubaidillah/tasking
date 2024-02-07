@@ -32,7 +32,8 @@ export async function POST(req: Request) {
       httpOnly: true,
       maxAge: 10 * 365 * 24 * 60 * 60,
       path: "/",
-      sameSite: "lax",
+      sameSite: "strict",
+      secure: true,
     });
 
     return Response.json({ user: user }, { status: http.OK });

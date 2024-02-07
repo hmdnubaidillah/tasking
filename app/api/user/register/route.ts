@@ -4,6 +4,8 @@ import http from "http-status-codes";
 import { userSchema } from "@/libs/lib.validation";
 import { UserType } from "@/types";
 import HttpExcepction from "@/helpers/helper.httpException";
+import { cookies } from "next/headers";
+import { createToken } from "@/libs/lib.jwt";
 
 async function checkUserExist(email: string, username: string) {
   const existingUserEmail = await prisma.user.findUnique({
@@ -19,10 +21,10 @@ async function checkUserExist(email: string, username: string) {
   });
 
   if (existingUserEmail || existingUsername) {
-    throw new HttpExcepction(http.NOT_FOUND, {
-      ...(existingUserEmail ? { message: "Email already taken" } : {}),
-      ...(existingUsername ? { message: "Username already taken" } : {}),
-    });
+    throw new HttpExcepction(
+      http.BAD_REQUEST,
+      existingUserEmail ? "email already taken" : "" || existingUsername ? "username already taken" : ""
+    );
   }
 }
 
@@ -42,6 +44,16 @@ export async function POST(req: Request) {
         username: userValidated.username,
         password: hashedPassword,
       },
+    });
+
+    const token = await createToken(newUser.id);
+
+    cookies().set("token", token, {
+      httpOnly: true,
+      maxAge: 10 * 365 * 24 * 60 * 60,
+      path: "/",
+      sameSite: "strict",
+      secure: true,
     });
 
     return Response.json({ user: newUser }, { status: http.CREATED });

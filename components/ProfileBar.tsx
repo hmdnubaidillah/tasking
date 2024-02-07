@@ -2,28 +2,28 @@
 import { Button } from "./ui/button";
 import { useRouter } from "next/navigation";
 import { logout } from "@/app/action";
+import { useGetUser } from "@/hooks/hook.user";
+import SkeletonProfile from "./skeleton/SkeletonProfile";
+import { isCookieExist } from "@/app/action";
 
-export default function ProfileBar({ token }: { token: boolean | undefined }) {
+export default function ProfileBar() {
   const route = useRouter();
+  const { data, isPending } = useGetUser();
 
   return (
     <div className="bg-white h-fit border border-gray-300 rounded-sm cursor-default">
-      {!token ? null : (
-        //  user profile
-        <div className="flex items-center gap-2 p-4 border-b border-gray-300">
-          <div className="w-[50px] h-[50px] bg-purple-500 rounded-full grid place-content-center text-xl font-semibold text-white">
-            U
-          </div>
-          <div>
-            <h1 className="text-base font-medium leading-tight hover:underline">User145</h1>
-            <h1 className="text-sm font-normal text-gray-400">user145@gmail.com</h1>
-          </div>
+      {!isCookieExist ? null : isPending ? ( //  user profile
+        <SkeletonProfile />
+      ) : (
+        <div className="flex flex-col gap-2 p-4 border-b border-gray-300">
+          <h1 className="text-base font-medium hover:underline">{data?.data.user.username}</h1>
+          <h1 className="text-sm font-normal text-gray-400">{data?.data.user.email}</h1>
         </div>
       )}
 
       {/* button */}
       <div className="p-4">
-        {!token ? (
+        {!isCookieExist ? (
           <Button
             onClick={() => route.push("/login")}
             className="sm:text-lg text-base w-full bg-green-500 hover:bg-green-400"

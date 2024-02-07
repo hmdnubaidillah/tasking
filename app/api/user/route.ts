@@ -8,7 +8,7 @@ interface User {
   id: string;
 }
 
-export async function GET(req: Request, { params }: { params: { userId: string } }) {
+export async function GET(req: Request) {
   const token = cookies().get("token");
 
   const id = ((await jwtDecode(token?.value)) as User).id;
@@ -16,7 +16,7 @@ export async function GET(req: Request, { params }: { params: { userId: string }
   try {
     const user = await prisma.user.findUnique({
       where: {
-        id: params.userId,
+        id,
       },
       include: { tasks: true },
     });
