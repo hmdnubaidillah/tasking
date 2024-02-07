@@ -1,19 +1,19 @@
 export const buttonsImportance = [
   {
     name: "Very Important",
-    color: "rgb(239 68 68)",
+    color: "rgb(239,68,68)",
   },
   {
     name: "Important",
-    color: "rgb(249 115 22)",
+    color: "rgb(249,115,22)",
   },
   {
     name: "Less Important",
-    color: "rgb(59 130 246)",
+    color: "rgb(59,130,246)",
   },
   {
     name: "Optional",
-    color: "rgb(148 163 184)",
+    color: "rgb(148,163,184)",
   },
 ];
 

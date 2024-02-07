@@ -1,5 +1,3 @@
-import { AxiosError } from "axios";
-
 export interface UserType {
   email: string;
   username: string;
@@ -23,9 +21,20 @@ export interface LoginFormType {
 }
 
 export interface TaskType {
+  id: string;
+  userId: string;
   name: string;
   desc?: string;
-  dateDl?: Date;
+  dateDl?: string;
+  category: string;
+  importance: string;
+}
+
+export interface TaskFormType {
+  name: string;
+  desc?: string;
+  date?: string;
+  time?: string;
   category: string;
   importance: string;
 }

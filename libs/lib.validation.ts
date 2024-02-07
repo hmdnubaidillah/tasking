@@ -13,7 +13,9 @@ export const taskSchema = object({
   name: string().required("task name is required"),
   desc: string(),
   category: string().required("category is required"),
-  dateDl: date(),
+  time: string(),
+  date: string(),
+  dateDl: string(),
   importance: string().required("importance is required"),
 });
 
@@ -40,6 +42,6 @@ export const updateTaskSchema = object({
   category: string().required(),
   desc: string(),
   isOngoing: boolean(),
-  dateDl: date(),
+  dateDl: string(),
   isDone: boolean(),
 });
