@@ -29,7 +29,7 @@ export default function CardTask() {
     <>
       {data?.data.user.tasks.length < 1 ? (
         <div className="rounded-sm bg-white h-[200px] border-[1.5px] border-gray-300 cursor-default transition-all mb-3 grid place-content-center text-textPrimary">
-          <h1 className="text-2xl font-medium">You have no data?.data.user.tasks yey!</h1>
+          <h1 className="text-2xl font-medium">You have no tasks yey!</h1>
         </div>
       ) : (
         <>
@@ -78,7 +78,7 @@ export default function CardTask() {
                         Edit
                       </Button>
                       <Button
-                        onClick={() => handleTaskIsDone(task.id)}
+                        onClick={() => handleTaskIsDone(task.id!)}
                         disabled={isTaskDone ? true : false}
                         className="bg-green-500 hover:bg-green-400"
                       >

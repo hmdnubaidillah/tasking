@@ -25,7 +25,7 @@ model Task {
   authorId    String @db.ObjectId
   name        String
   desc        String?
-  dateDl      String?
+  dateDl      String? @default("No Dateline")
   category    String
   importance  String
   isDone      Boolean @default(false)

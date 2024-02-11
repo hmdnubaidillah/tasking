@@ -21,7 +21,7 @@ export interface LoginFormType {
 }
 
 export interface TaskType {
-  id: string;
+  id?: string;
   userId: string;
   name: string;
   desc?: string;

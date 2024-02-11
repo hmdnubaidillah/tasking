@@ -1,5 +1,5 @@
 import { TaskFormType, TaskType } from "@/types";
-import { useQuery, useMutation } from "@tanstack/react-query";
+import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
 
 export function useGetTasks() {
@@ -18,6 +18,8 @@ export function useGetTasks() {
 }
 
 export function useCreateTask() {
+  const queryClient = useQueryClient();
+
   const { mutate, data, isPending, isSuccess, error, isError } = useMutation({
     mutationKey: ["createTask"],
     mutationFn: (formData: TaskType) => axios.post("/api/task/new", formData),
@@ -25,6 +27,10 @@ export function useCreateTask() {
       if (axios.isAxiosError(err) && err.response) {
         return err;
       }
+    },
+
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["tasks"] });
     },
   });
 
