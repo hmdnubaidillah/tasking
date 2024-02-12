@@ -1,7 +1,7 @@
 import { TaskIdType } from "@/types";
-import { prisma } from "@/libs/lib.db";
+import { prisma } from "@/libs/db";
 import http from "http-status-codes";
-import HttpExcepction from "@/helpers/helper.httpException";
+import HttpExcepction from "@/helpers/httpException";
 
 export async function DELETE(req: Request, { params }: TaskIdType) {
   try {

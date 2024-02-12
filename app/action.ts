@@ -1,6 +1,6 @@
 "use server";
 
-import { jwtDecode } from "@/libs/lib.jwt";
+import { jwtDecode } from "@/libs/jwt";
 import { cookies } from "next/headers";
 
 export async function isCookieExist() {

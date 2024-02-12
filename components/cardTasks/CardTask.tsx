@@ -3,27 +3,25 @@ import { useEffect, useState } from "react";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 import { TaskType } from "@/types";
-import { useGetUser } from "@/hooks/hook.user";
+import { useGetUser } from "@/hooks/user";
 import SkeletonTaskCard from "../skeleton/SkeletonTaskCard";
 import ImportanceBadge from "./ImportanceBadge";
+import { useDeleteTask, useUpdateTask } from "@/hooks/task";
 
 export default function CardTask() {
-  const [isTaskDone, setIsTaskDone] = useState(false);
+  const [taskId, setTaskId] = useState("");
+
   const { data, isPending } = useGetUser();
-  const [tasks, setTasks] = useState<TaskType[]>([]);
+  const deleteTask = useDeleteTask();
+  const isTaskDone = useUpdateTask();
 
-  function handleTaskIsDone(id: string) {
-    const task = tasks.find((e) => e.id === id);
-
-    localStorage.setItem(task?.id!, JSON.stringify({ ...task, isDone: true, isOngoing: false }));
-
-    // setIsTaskDone(true);
-    console.log(typeof task?.id);
+  function handleTaskIsDone(taskId: string, task: TaskType) {
+    isTaskDone.mutate({ taskId, task: { ...task, isDone: true } });
   }
 
-  useEffect(() => {
-    setTasks(data?.data.user.tasks);
-  }, [data?.data.user.tasks]);
+  function handleDeleteTask(id: string) {
+    deleteTask.mutate({ taskId: id });
+  }
 
   return (
     <>
@@ -36,19 +34,17 @@ export default function CardTask() {
           {isPending ? (
             <SkeletonTaskCard />
           ) : (
-            data?.data.user.tasks.map((task: TaskType, i: number) => (
+            data?.data.user.tasks.map((task: TaskType) => (
               <div
-                key={task.name}
-                className={`${
-                  isTaskDone ? "opacity-50" : "opacity-100"
-                } rounded-sm bg-white h-fit border-[1.5px] border-gray-300 cursor-default transition-all mb-3`}
+                key={task.id}
+                className="opacity-100 rounded-sm bg-white h-fit border-[1.5px] border-gray-300 cursor-default transition-all mb-3"
               >
                 <>
                   <div className="border-b border-gray-300 p-4 flex items-center justify-between">
                     <h1 className="sm:text-2xl text-xl font-semibold ">{task.category}</h1>
                     <div className="sm:text-sm text-xs">
                       <span className="font-medium">
-                        {task.dateDl === null ? "No Dateline" : "Dateline : " + task.dateDl}
+                        {task.dateDl === " | " ? "No Dateline" : "Dateline : " + task.dateDl}
                       </span>
                     </div>
                   </div>
@@ -65,25 +61,43 @@ export default function CardTask() {
                       <ImportanceBadge importance={task.importance} />
                       <Badge
                         className={`${
-                          isTaskDone ? "bg-primaryBlue hover:bg-primaryBlue" : "bg-amber-500 hover:bg-amber-500"
+                          task.isDone ? "bg-primaryBlue hover:bg-primaryBlue" : "bg-amber-500 hover:bg-amber-500"
                         } sm:text-sm text-xs rounded-md`}
                       >
-                        {isTaskDone ? "Done" : "On Going"}
+                        {task.isDone ? "Done" : "On Going"}
                       </Badge>
                     </div>
 
                     {/* buttons */}
                     <div className="flex items-center gap-2">
-                      <Button disabled={isTaskDone ? true : false} className="bg-primaryBlue hover:bg-primaryHoverBlue">
-                        Edit
-                      </Button>
-                      <Button
-                        onClick={() => handleTaskIsDone(task.id!)}
-                        disabled={isTaskDone ? true : false}
-                        className="bg-green-500 hover:bg-green-400"
-                      >
-                        Done
-                      </Button>
+                      {task.isDone ? (
+                        <Button
+                          onClick={() => handleDeleteTask(task.id!)}
+                          variant={"destructive"}
+                          className="opacity-100"
+                        >
+                          {deleteTask.isPending ? "Loading..." : "Delete"}
+                        </Button>
+                      ) : (
+                        <>
+                          <Button
+                            disabled={task.isDone ? true : false}
+                            className="bg-primaryBlue hover:bg-primaryHoverBlue"
+                          >
+                            Edit
+                          </Button>
+                          <Button
+                            onClick={() => {
+                              setTaskId(task.id!);
+                              handleTaskIsDone(task.id!, { ...task });
+                            }}
+                            disabled={task.isDone ? true : false}
+                            className="bg-green-500 hover:bg-green-400"
+                          >
+                            {task.id === taskId && isTaskDone.isPending ? "Loading..." : "Done"}
+                          </Button>
+                        </>
+                      )}
                     </div>
                   </div>
                 </>

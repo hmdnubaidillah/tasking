@@ -1,8 +1,8 @@
-import { prisma } from "@/libs/lib.db";
+import { prisma } from "@/libs/db";
 import http from "http-status-codes";
-import HttpExcepction from "@/helpers/helper.httpException";
+import HttpExcepction from "@/helpers/httpException";
 import { cookies } from "next/headers";
-import { jwtDecode } from "@/libs/lib.jwt";
+import { jwtDecode } from "@/libs/jwt";
 
 interface User {
   id: string;

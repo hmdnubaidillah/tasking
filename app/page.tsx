@@ -13,7 +13,9 @@ export default function Home() {
           <section className="flex sm:flex-row flex-col-reverse gap-5 relative">
             <div className="flex flex-col gap-3 sm:w-[68%] w-full">
               <DateBadge />
-              <CardTask />
+              <div className="flex flex-col-reverse">
+                <CardTask />
+              </div>
             </div>
             <aside className="sm:w-[31%]">
               <ProfileBar />

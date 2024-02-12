@@ -7,10 +7,11 @@ import { buttonsImportance, buttonsCategory } from "@/constant";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { ErrorResponse, TaskFormType } from "@/types";
-import { taskSchema } from "@/libs/lib.validation";
-import { useCreateTask } from "@/hooks/hook.task";
-import moment from "moment";
+import { taskSchema } from "@/libs/validation";
+import { useCreateTask } from "@/hooks/task";
 import { getUserId } from "@/app/action";
+import moment from "moment";
+import { useRouter } from "next/navigation";
 
 export default function NewTaskModal({
   setTaskDialog,
@@ -19,7 +20,7 @@ export default function NewTaskModal({
 }) {
   const [btnImporatance, setBtnImporatance] = useState("");
   const [btnCategory, setBtnCategory] = useState("");
-  const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   const {
     register,
@@ -40,11 +41,13 @@ export default function NewTaskModal({
     const time = getValues("time");
     const token = (await getUserId()) as { id: string };
 
+    console.log(formData);
+
     mutate({
       userId: token.id,
       name: formData.name,
       desc: formData.desc,
-      dateDl: `${date} | ${time}`,
+      dateDl: `${formData.date !== "" ? date : ""} | ${formData.time ? time : ""}`,
       category: formData.category,
       importance: formData.importance,
     });
@@ -54,12 +57,14 @@ export default function NewTaskModal({
     if (isSuccess) {
       setTaskDialog(false);
       document.querySelector("body")?.classList.remove("overflow-hidden");
+
+      router.refresh();
     }
 
     if (isError) {
       console.log((error?.response?.data as ErrorResponse).error);
     }
-  }, [isSuccess, setTaskDialog, isError, error]);
+  }, [isSuccess, setTaskDialog, isError, error, router]);
 
   function handleCloseModal(e: React.MouseEvent) {
     const target = (e.target as HTMLElement).id;

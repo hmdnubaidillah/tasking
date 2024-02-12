@@ -3,12 +3,12 @@ import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
-import { registerSchema } from "@/libs/lib.validation";
+import { registerSchema } from "@/libs/validation";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { ErrorMessage } from "@hookform/error-message";
 import { ErrorResponse, RegisterFormType } from "@/types";
 import { useEffect, useState } from "react";
-import { useRegister } from "@/hooks/hook.user";
+import { useRegister } from "@/hooks/user";
 import { useRouter } from "next/navigation";
 
 export default function RegisterForm() {
