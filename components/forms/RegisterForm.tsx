@@ -52,9 +52,11 @@ export default function RegisterForm() {
     }
   }, [err, setError]);
 
-  if (isSuccess) {
-    router.push("/");
-  }
+  useEffect(() => {
+    if (isSuccess) {
+      router.push("/");
+    }
+  }, [isSuccess, router]);
 
   return (
     <div>
