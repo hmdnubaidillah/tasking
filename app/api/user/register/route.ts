@@ -1,11 +1,11 @@
-import { prisma } from "@/libs/lib.db";
-import { encrypt } from "@/libs/lib.bcrypt";
+import { prisma } from "@/libs/db";
+import { encrypt } from "@/libs/bcrypt";
 import http from "http-status-codes";
-import { userSchema } from "@/libs/lib.validation";
+import { userSchema } from "@/libs/validation";
 import { UserType } from "@/types";
-import HttpExcepction from "@/helpers/helper.httpException";
+import HttpExcepction from "@/helpers/httpException";
 import { cookies } from "next/headers";
-import { createToken } from "@/libs/lib.jwt";
+import { createToken } from "@/libs/jwt";
 
 async function checkUserExist(email: string, username: string) {
   const existingUserEmail = await prisma.user.findUnique({

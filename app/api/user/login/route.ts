@@ -1,9 +1,9 @@
-import { prisma } from "@/libs/lib.db";
-import { decrypt } from "@/libs/lib.bcrypt";
-import { createToken } from "@/libs/lib.jwt";
+import { prisma } from "@/libs/db";
+import { decrypt } from "@/libs/bcrypt";
+import { createToken } from "@/libs/jwt";
 import { UserType } from "@/types";
 import http from "http-status-codes";
-import HttpExcepction from "@/helpers/helper.httpException";
+import HttpExcepction from "@/helpers/httpException";
 import { cookies } from "next/headers";
 
 export async function POST(req: Request) {

@@ -28,6 +28,8 @@ export interface TaskType {
   dateDl?: string;
   category: string;
   importance: string;
+  isDone?: boolean;
+  isOngoing?: boolean;
 }
 
 export interface TaskFormType {

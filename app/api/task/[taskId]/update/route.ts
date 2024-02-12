@@ -1,8 +1,8 @@
 import { TaskIdType } from "@/types";
-import { prisma } from "@/libs/lib.db";
+import { prisma } from "@/libs/db";
 import http from "http-status-codes";
-import HttpExcepction from "@/helpers/helper.httpException";
-import { updateTaskSchema } from "@/libs/lib.validation";
+import HttpExcepction from "@/helpers/httpException";
+import { updateTaskSchema } from "@/libs/validation";
 
 export async function PATCH(req: Request, { params }: TaskIdType) {
   const body = await req.json();
@@ -15,13 +15,13 @@ export async function PATCH(req: Request, { params }: TaskIdType) {
         id: params.taskId,
       },
       data: {
-        isOngoing: validatedTask.isOngoing,
-        dateDl: validatedTask.dateDl,
+        name: validatedTask.name,
+        desc: validatedTask.desc,
         importance: validatedTask.importance,
         isDone: validatedTask.isDone,
-        name: validatedTask.name,
         category: validatedTask.category,
-        desc: validatedTask.desc,
+        dateDl: validatedTask.dateDl,
+        isOngoing: validatedTask.isOngoing,
       },
     });
 

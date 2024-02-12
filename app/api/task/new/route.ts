@@ -1,7 +1,7 @@
 import http from "http-status-codes";
-import { prisma } from "@/libs/lib.db";
-import { taskSchema } from "@/libs/lib.validation";
-import HttpExcepction from "@/helpers/helper.httpException";
+import { prisma } from "@/libs/db";
+import { taskSchema } from "@/libs/validation";
+import HttpExcepction from "@/helpers/httpException";
 
 export async function POST(req: Request) {
   const body = await req.json();

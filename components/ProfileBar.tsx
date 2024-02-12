@@ -2,7 +2,7 @@
 import { Button } from "./ui/button";
 import { useRouter } from "next/navigation";
 import { logout } from "@/app/action";
-import { useGetUser } from "@/hooks/hook.user";
+import { useGetUser } from "@/hooks/user";
 import SkeletonProfile from "./skeleton/SkeletonProfile";
 import { isCookieExist } from "@/app/action";
 
